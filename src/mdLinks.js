@@ -1,17 +1,12 @@
-const { isAbsolutePath, convertAbsolute } = require('./function.js');
+const { convertAbsolute } = require('./function.js');
 
-const mdLinks(path) => {{ 
-  return new Promise((resolve) => {
-    const completePath = convertAbsolute(path)
-    resolve(completePath)     
-  }
+function mdLinks(path) {
   return new Promise((resolve, reject) => {
-    const VerifyRoute = isAbsolutePath(path)
-    
-  })
-  )}
+    const completePath = convertAbsolute(path);
+    resolve(completePath);
+  });
 }
-module.exports = {
 
+module.exports = {
   mdLinks,
 }
