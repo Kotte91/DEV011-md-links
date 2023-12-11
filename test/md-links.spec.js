@@ -1,4 +1,5 @@
 const mdLinks = require('../');
+const { existRoute } = require('../src/function');
 
 
 describe('mdLinks', () => {
@@ -8,6 +9,12 @@ describe('mdLinks', () => {
   });
 
 });
+
+describe('existRoute', () => {
+  it('comprueba que la ruta existe', () => {
+    expect(typeof existRoute).toBe('function')
+  })
+})
 
 // describe('mdLinks', () => {
 //   it('debería resolver un arreglo con 3 links para un archivo .md con 3 links', () => {
