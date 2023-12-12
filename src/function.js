@@ -1,5 +1,7 @@
 const fs = require('fs');
 const path = require('path');
+const marked = require('marked');
+const { JSDOM } = require('jsdom');
 
 const isAbsolutePath = (route) => path.isAbsolute(route);
 const convertAbsolute = (route) => (isAbsolutePath(route) ? route : path.resolve(route));
@@ -22,8 +24,24 @@ const readFile = (route) => {
   })
 }
 
-const extractLinks = (data) => {
+const extractLinks = (data, file) => {
+  const arrObjs = []
+  const html = marked.parse(data)
+  const dom = new JSDOM(html);
+  const nodeListA = dom.window.document.querySelectorAll("a")
+  // console.log(nodeListA.length);
+  nodeListA.forEach((anchor)=>{ //<a> anchor
+    arrObjs.push(
+      {
+        href: anchor.href,
+        text: anchor.textContent,
+        file,
+      }
+    )
+  })
 
+
+  return arrObjs
 }
 
 module.exports = {
@@ -32,6 +50,7 @@ module.exports = {
   existRoute,
   extensionName,
   nameExt,
-  readFile
+  readFile,
+  extractLinks
 };
 

@@ -10,12 +10,14 @@
     "commit": "d257c41694344460623eb1f1bb2a690bdfe33f83"
   },
   "dependencies": {
-    "markdown-it": "^13.0.2"
+    "jsdom": "^23.0.1",
+    "markdown-it": "^13.0.2",
+    "marked": "^11.1.0"
   },
   "devDependencies": {
     "jest": "^29.7.0"
   },
-        "scripts": {
-      "test": "jest"
-    }
+  "scripts": {
+    "test": "jest"
+  }
 }

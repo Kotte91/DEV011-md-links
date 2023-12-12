@@ -1,4 +1,4 @@
-const { convertAbsolute, extensionName, nameExt, readFile} = require('./function.js');
+const { convertAbsolute, extensionName, nameExt, readFile, extractLinks} = require('./function.js');
 const fs = require( 'fs' );
 
 function mdLinks(route) {
@@ -13,7 +13,10 @@ function mdLinks(route) {
     const extresult = nameExt(completePath);
     
     readFile(completePath)
-    .then((res) => resolve(res))
+    .then((data) =>{
+      const linksExtracted = extractLinks(data, completePath)
+      resolve(linksExtracted)
+    })
     .catch((err)=> reject(err))
 
     // resolve({ 
