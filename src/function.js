@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const marked = require('marked');
 const { JSDOM } = require('jsdom');
+const axios = require('axios');
 
 const isAbsolutePath = (route) => path.isAbsolute(route);
 const convertAbsolute = (route) => (isAbsolutePath(route) ? route : path.resolve(route));
@@ -23,6 +24,10 @@ const readFile = (route) => {
     })
   })
 }
+
+axios.get('prueba.md')
+  .then(response => console.log(response.data))
+  .catch(error => console.error(error))
 
 const extractLinks = (data, file) => {
   const arrObjs = []

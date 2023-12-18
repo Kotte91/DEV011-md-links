@@ -18,14 +18,6 @@ function mdLinks(route) {
       resolve(linksExtracted)
     })
     .catch((err)=> reject(err))
-
-    // resolve({ 
-    //   message: 'La ruta está correcta', 
-    //   completePath, 
-    //   extension, 
-    //   nameExtResult: extresult,
-    //   verRoute
-    //  });
   });
 }
 
