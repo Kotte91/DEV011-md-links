@@ -1,25 +1,44 @@
-const mdLinks = require('../');
-const { existRoute } = require('../src/function');
+const { mdLinks } = require('../src/mdLinks');
+const { existRoute, readFile, isAbsolutePath, convertAbsolute, extensionName, nameExt } = require('../src/function');
 
 
 describe('mdLinks', () => {
-
   it('esta es una funcion', () => {
     expect(typeof mdLinks).toBe('function');
   });
-
-});
-
-describe('existRoute', () => {
+  it('deberia se una ruta parcial', () => {
+    const parcial = isAbsolutePath("docs/04-milestone.md");
+    expect(parcial).toEqual(false);
+  })
+  it('deberia se una ruta absoluta', () => {
+    const parcial = isAbsolutePath("docs/04-milestone.md");
+    expect(parcial).toEqual(false);
+  })
+  it('deberia se una ruta absoluta', () => {
+    const relative = convertAbsolute("docs/04-milestone.md");
+    const absoluth = "C:\\Users\\Kotte\\Documents\\GitHub\\DEV011-md-links\\docs\\04-milestone.md"
+    expect(relative).toBe(absoluth);
+  })
+  it('deberia se una ruta absoluta', () => {
+    const relative = convertAbsolute("docs/04-milestone.md");
+   expect(relative).toBe("C:\\Users\\Kotte\\Documents\\GitHub\\DEV011-md-links\\docs\\04-milestone.md");
+  })
   it('comprueba que la ruta existe', () => {
     expect(typeof existRoute).toBe('function')
   })
-})
+  it('esta en una funcion', () => {
+    expect(typeof readFile).toBe('function')
+  });
 
-// describe('mdLinks', () => {
-//   it('debería resolver un arreglo con 3 links para un archivo .md con 3 links', () => {
-//     return mdLinks('miArchivo.md').then((result) => {
-//       expect...;
-//     });
-//   });
-// });
+  it('devuelve una promesa', () => {
+    const result = readFile('prueba.md');
+    expect(result instanceof Promise).toBe(true);
+    expect(typeof result.then).toBe('function');
+  });
+  it('esta funcion nos da una promesa', () => {
+    expect(typeof extensionName).toBe('function')
+  })
+  it('esta funcion nos da una promesa', () => {
+    expect(typeof nameExt).toBe('function')
+  })
+});

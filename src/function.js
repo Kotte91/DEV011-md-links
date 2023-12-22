@@ -25,10 +25,6 @@ const readFile = (route) => {
   })
 }
 
-axios.get('prueba.md')
-  .then(response => console.log(response.data))
-  .catch(error => console.error(error))
-
 const extractLinks = (data, file) => {
   const arrObjs = []
   const html = marked.parse(data)
@@ -44,9 +40,28 @@ const extractLinks = (data, file) => {
       }
     )
   })
-
-
   return arrObjs
+}
+
+const validateLink = (arrObjs = []) => {
+  const arrObjsModificado = arrObjs.map((element) =>{
+    return axios.get(element.href)
+    .then((response) => {
+      return {
+        ...element,
+        status: response.status,
+        statusText: response.statusText,
+      }
+     })
+    .catch((error) => {
+      return {
+        ...element,
+        status: error.response.status,
+        statusText: error.response.statusText
+      }
+    })
+  })
+  return Promise.all(arrObjsModificado);
 }
 
 module.exports = {
@@ -56,6 +71,7 @@ module.exports = {
   extensionName,
   nameExt,
   readFile,
-  extractLinks
+  extractLinks,
+  validateLink,
 };
 
