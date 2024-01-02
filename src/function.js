@@ -88,7 +88,6 @@ const statsWithValidate = (validateLink) => {
   };
 };
 
-
 module.exports = {
   isAbsolutePath,
   convertAbsolute,
