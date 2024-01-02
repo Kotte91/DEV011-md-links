@@ -14,14 +14,19 @@ function mdLinks(route, validate, stats) {
     readFile(completePath)
     .then((data) => {
       const linksExtracted = extractLinks(data, completePath)
-      if  (validate) {
+      if  (validate & stats) {
         const linkValidate = validateLink(linksExtracted)
         resolve(linkValidate)
-      }else {
+      }else if (validate) {
+        const linkValidate = validateLink(linksExtracted)
+        resolve(linkValidate)
+      }else if (stats) {
+        const linkValidate = validateLink(linksExtracted)
+        resolve(linkValidate)
+      }else{
         resolve(linksExtracted)
-      }
             
-    })
+    }})
     .catch((err)=> reject(err))
   });
 }

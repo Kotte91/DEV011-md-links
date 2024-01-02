@@ -53,16 +53,41 @@ const validateLink = (arrObjs = []) => {
         statusText: response.statusText,
       }
      })
-    .catch((error) => {
-      return {
-        ...element,
-        status: error.response.status,
-        statusText: error.response.statusText
-      }
-    })
-  })
+      .catch((error) => {
+        return {
+          ...element,
+          status: error.response ? error.response.status : undefined,
+          statusText: error.response ? error.response.statusText : undefined,
+        };
+      });
+  });
   return Promise.all(arrObjsModificado);
-}
+};
+
+
+const stats = (route) => {
+  const uniqueLinks = route.filter((route, index) => {
+    return route.indexOf(route) === index;
+  })
+
+    return {
+      Total: route.length,
+      Unique: uniqueLinks.length
+    }
+};
+const statsWithValidate = (validateLink) => {
+  const uniqueLinks = validateLink.filter((link, index) => link.indexOf(link) === index);
+  const brokenLinks = validateLink.filter((link) => link.status === undefined);
+  const unbrokenLinks = validateLink.filter((link) => link.status !== undefined);
+
+  return {
+    Total: validateLink.length,
+    Unique: uniqueLinks.length,
+    Active: unbrokenLinks.length,
+    Broken: brokenLinks.length,
+  };
+};
+
 
 module.exports = {
   isAbsolutePath,
@@ -73,5 +98,7 @@ module.exports = {
   readFile,
   extractLinks,
   validateLink,
+  stats,
+  statsWithValidate
 };
 
