@@ -50,7 +50,7 @@ const validateLink = (arrObjs = []) => {
       return {
         ...element,
         status: response.status,
-        statusText: response.statusText,
+        OK: response.status >= 200 && response.status < 300 ? 'ok' : 'fail',
       }
      })
       .catch((error) => {
@@ -65,27 +65,20 @@ const validateLink = (arrObjs = []) => {
 };
 
 
-const stats = (route) => {
-  const uniqueLinks = route.filter((route, index) => {
-    return route.indexOf(route) === index;
-  })
-
-    return {
-      Total: route.length,
-      Unique: uniqueLinks.length
-    }
-};
-const statsWithValidate = (validateLink) => {
-  const uniqueLinks = validateLink.filter((link, index) => link.indexOf(link) === index);
-  const brokenLinks = validateLink.filter((link) => link.status === undefined);
-  const unbrokenLinks = validateLink.filter((link) => link.status !== undefined);
-
-  return {
-    Total: validateLink.length,
-    Unique: uniqueLinks.length,
-    Active: unbrokenLinks.length,
-    Broken: brokenLinks.length,
-  };
+const statsLinks = (arrObjs, validate) => {
+  const promiseValidate = validateLink(arrObjs)
+  return promiseValidate.then((arrayValidate)=>{
+    
+  const totalLinks = arrObjs.length;
+  const uniqueLinks = [...new Set(arrayValidate.map((link) => link.href))];
+  const resultStats =
+    "Total: " + totalLinks + "\nUnique: " + uniqueLinks.length;
+  const brokenLinks = arrayValidate.filter((link) => link.status !== 200);
+  if (validate && brokenLinks) {
+    return resultStats + "\nBroken: " + brokenLinks.length;
+  }
+  return resultStats;
+});
 };
 
 module.exports = {
@@ -97,7 +90,6 @@ module.exports = {
   readFile,
   extractLinks,
   validateLink,
-  stats,
-  statsWithValidate
+  statsLinks,
 };
 
