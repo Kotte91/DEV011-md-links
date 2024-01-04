@@ -50,7 +50,7 @@ const validateLink = (arrObjs = []) => {
       return {
         ...element,
         status: response.status,
-        OK: response.status >= 200 && response.status < 300 ? 'ok' : 'fail',
+        statusText: response.status >= 200 && response.status < 300 ? 'ok' : 'fail',
       }
      })
       .catch((error) => {
