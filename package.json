@@ -1,6 +1,7 @@
 {
-  "name": "md-links",
+  "name": "mjvaldebenito-md-links",
   "version": "0.1.0",
+  "description": "Herramienta de línea de comando (CLI) que lee y analiza archivos en formato Markdown para verificar el estado de los enlaces",
   "engines": {
     "node": ">=16.x"
   },
